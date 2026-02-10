@@ -200,60 +200,70 @@
         height: 150
     });
 
-    // DFlip Professional Initialization with Speed Optimizations
+    // DFlip Professional Initialization
     var flipBook;
     $(document).ready(function () {
         var source = "{{ magazine.pdf_file.url }}";
-        var settings = {
-            source: source,
-            renderType: "webgl",
-            height: "100%", // Explicitly set height
-            duration: 400,
-            overwritePDFExport: true,
-            pageTextureSize: 1024,
-            direction: DFLIP.DIRECTION.RTL,
-            autoEnableOutline: false,
-            autoEnableThumbnail: false,
-            enableSound: false,
-            // Ultra-Performance Tuning
-            more: {
-                preload: 2,
-                range: 2,
-                textSelectable: false,
-                webgl: true,
-                cursor: "pointer",
-                progressive: true,
-                paddingTop: 20, // Add internal padding for better fit
-                paddingBottom: 20
-            }
-        };
 
-        // Initialize FlipBook with ultra-speed optimizations
-        if ($.fn.flipBook) {
-            flipBook = $("#df-viewer-container").flipBook(source, settings);
-            // Hide loader when book is ready (approximate)
-            setTimeout(function () {
-                $("#pdf-loader").fadeOut();
-            }, 2000);
-        } else {
-            console.error("DFlip plugin not found!");
-            document.getElementById('df-viewer-container').innerHTML = '<div class="text-center p-5 text-gold">خطأ في تحميل مكتبة العرض. يرجى المحاولة لاحقاً.</div>';
+        {% if pages %}
+        // Use converted images for ultra-fast loading
+        source = [
+            {% for page in pages %}
+                    "{{ page.image.url }}",
+        {% endfor %}
+            ];
+    {% endif %}
+
+    var settings = {
+        source: source,
+        renderType: "webgl",
+        height: "100%", // Explicitly set height
+        duration: 400,
+        overwritePDFExport: true,
+        pageTextureSize: 1024,
+        direction: DFLIP.DIRECTION.RTL,
+        autoEnableOutline: false,
+        autoEnableThumbnail: false,
+        enableSound: false,
+        // Ultra-Performance Tuning
+        more: {
+            preload: 2,
+            range: 2,
+            textSelectable: false,
+            webgl: true,
+            cursor: "pointer",
+            progressive: true,
+            paddingTop: 20, // Add internal padding for better fit
+            paddingBottom: 20
         }
+    };
 
-        // Fullscreen Toggle logic
-        $("#btn-fullscreen").on("click", function () {
-            if (flipBook && flipBook.ui && typeof flipBook.ui.toggleFullscreen === 'function') {
-                flipBook.ui.toggleFullscreen();
-            } else if (flipBook && typeof flipBook.toggleFullscreen === 'function') {
-                flipBook.toggleFullscreen();
-            } else {
-                // Fallback for native fullscreen if library method fails
-                var elem = document.getElementById("df-viewer-container");
-                if (elem.requestFullscreen) elem.requestFullscreen();
-                else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
-                else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
-            }
-        });
+    // Initialize FlipBook with ultra-speed optimizations
+    if ($.fn.flipBook) {
+        flipBook = $("#df-viewer-container").flipBook(source, settings);
+        // Hide loader when book is ready (approximate)
+        setTimeout(function () {
+            $("#pdf-loader").fadeOut();
+        }, 2000);
+    } else {
+        console.error("DFlip plugin not found!");
+        document.getElementById('df-viewer-container').innerHTML = '<div class="text-center p-5 text-gold">خطأ في تحميل مكتبة العرض. يرجى المحاولة لاحقاً.</div>';
+    }
+
+    // Fullscreen Toggle logic
+    $("#btn-fullscreen").on("click", function () {
+        if (flipBook && flipBook.ui && typeof flipBook.ui.toggleFullscreen === 'function') {
+            flipBook.ui.toggleFullscreen();
+        } else if (flipBook && typeof flipBook.toggleFullscreen === 'function') {
+            flipBook.toggleFullscreen();
+        } else {
+            // Fallback for native fullscreen if library method fails
+            var elem = document.getElementById("df-viewer-container");
+            if (elem.requestFullscreen) elem.requestFullscreen();
+            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+            else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+        }
+    });
     });
 
     // Check if DFlip loaded, if not show fallback

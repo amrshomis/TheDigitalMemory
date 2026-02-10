@@ -60,10 +60,76 @@ class Magazine(models.Model):
                 os.replace(output_path, input_path)
                 print(f"Successfully compressed {input_path}")
                 
+                
         except (subprocess.CalledProcessError, FileNotFoundError):
             # GS not installed or failed - ignore
             if os.path.exists(output_path):
                 os.remove(output_path)
+
+        # Trigger Image Conversion
+        self.convert_to_images()
+
+    def convert_to_images(self):
+        """
+        Converts PDF pages to images for high-performance loading.
+        """
+        try:
+            # Create output directory
+            output_dir = os.path.join(settings.MEDIA_ROOT, 'magazines', 'pages', self.slug)
+            os.makedirs(output_dir, exist_ok=True)
+            
+            # Check if pages already exist (skip if already converted)
+            if self.pages.exists():
+                return
+
+            input_path = self.pdf_file.path
+            output_pattern = os.path.join(output_dir, 'page_%03d.jpg')
+            
+            # Ghostscript command for PDF -> Images (JPEG)
+            # -r150 = 150 DPI (Good balance)
+            # -dJPEGQ=85 = High JPEG quality
+            command = [
+                'gs', '-sDEVICE=jpeg', 
+                '-dTextAlphaBits=4', '-dGraphicsAlphaBits=4', 
+                '-r150', '-dJPEGQ=85',
+                '-dNOPAUSE', '-dQUIET', '-dBATCH',
+                f'-sOutputFile={output_pattern}',
+                input_path
+            ]
+            
+            subprocess.run(command, check=True)
+            
+            # Create MagazinePage objects
+            # List all generated files
+            files = sorted([f for f in os.listdir(output_dir) if f.startswith('page_') and f.endswith('.jpg')])
+            
+            for i, filename in enumerate(files, 1):
+                # Construct relative path for ImageField
+                relative_path = os.path.join('magazines', 'pages', self.slug, filename)
+                
+                MagazinePage.objects.create(
+                    magazine=self,
+                    page_number=i,
+                    image=relative_path
+                )
+                
+            print(f"Successfully converted {len(files)} pages for {self.slug}")
+
+        except Exception as e:
+            print(f"Image conversion failed: {e}")
+
+class MagazinePage(models.Model):
+    magazine = models.ForeignKey(Magazine, on_delete=models.CASCADE, related_name='pages')
+    page_number = models.PositiveIntegerField()
+    image = models.ImageField(upload_to='magazines/pages/')
+
+    class Meta:
+        ordering = ['page_number']
+        verbose_name = "صفحة"
+        verbose_name_plural = "صفحات المجلة"
+
+    def __str__(self):
+        return f"{self.magazine.title} - p{self.page_number}"
 
     def get_absolute_url(self):
         return reverse('magazine_detail', kwargs={'slug': self.slug})
