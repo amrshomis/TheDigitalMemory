@@ -118,6 +118,18 @@ class Magazine(models.Model):
         except Exception as e:
             print(f"Image conversion failed: {e}")
 
+
+    def get_absolute_url(self):
+        return reverse('magazine_detail', kwargs={'slug': self.slug})
+
+    class Meta:
+        verbose_name = "مجلة"
+        verbose_name_plural = "المجلات"
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.title
+
 class MagazinePage(models.Model):
     magazine = models.ForeignKey(Magazine, on_delete=models.CASCADE, related_name='pages')
     page_number = models.PositiveIntegerField()
@@ -130,14 +142,3 @@ class MagazinePage(models.Model):
 
     def __str__(self):
         return f"{self.magazine.title} - p{self.page_number}"
-
-    def get_absolute_url(self):
-        return reverse('magazine_detail', kwargs={'slug': self.slug})
-
-    class Meta:
-        verbose_name = "مجلة"
-        verbose_name_plural = "المجلات"
-        ordering = ['-created_at']
-
-    def __str__(self):
-        return self.title
