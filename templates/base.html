@@ -5,20 +5,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}نظام المجلات الرقمية | تجربة فاخرة{% endblock %}</title>
+    <title>{% block title %}MAJALATI مجلتي | تجربة فاخرة{% endblock %}</title>
 
     <!-- SEO Meta Tags -->
     <meta name="description"
         content="{% block meta_description %}نظام المجلات الرقمية الأول في اليمن - حول ذكرياتك ومناسباتك إلى مجلات تفاعلية ثلاثية الأبعاد بلمسات احترافية وفخامة لا مثيل لها.{% endblock %}">
     <meta name="keywords"
         content="مجلات رقمية, اليمن, أرشفة ذكريات, مجلة تفاعلية, تصميم مجلات, بروتوكول الذكريات, معرض رقمي">
-    <meta name="author" content="The Digital Memory Team">
+    <meta name="author" content="MAJALATI Team">
 
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="The Digital Memory">
+    <meta property="og:site_name" content="MAJALATI">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:title" content="{% block og_title %}نظام المجلات الرقمية | تجربة فاخرة{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}MAJALATI مجلتي | تجربة فاخرة{% endblock %}">
     <meta property="og:description"
         content="{% block og_description %}حول ذكرياتك ومناسباتك إلى مجلات تفاعلية ثلاثية الأبعاد بلمسات احترافية.{% endblock %}">
     <meta property="og:image" content="{% block og_image_path %}{% static 'images/logo.jpeg' %}{% endblock %}">
@@ -26,7 +26,7 @@
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ request.build_absolute_uri }}">
-    <meta property="twitter:title" content="{% block twitter_title %}نظام المجلات الرقمية | تجربة فاخرة{% endblock %}">
+    <meta property="twitter:title" content="{% block twitter_title %}MAJALATI مجلتي | تجربة فاخرة{% endblock %}">
     <meta property="twitter:description"
         content="{% block twitter_description %}حول ذكرياتك ومناسباتك إلى مجلات تفاعلية ثلاثية الأبعاد.{% endblock %}">
     <meta property="twitter:image"
@@ -34,14 +34,16 @@
 
     <!-- Bootstrap RTL -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
-    <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
-        rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Optimized Font Loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
@@ -100,7 +102,12 @@
 
         .brand-logo:hover {
             filter: brightness(1.2);
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+        }
+
+        .brand-text-ar {
+            font-family: 'Amiri', serif;
+            font-weight: 700;
         }
 
         .logo-img {
@@ -307,8 +314,8 @@
                     <img src="{% static 'images/logo.jpeg' %}" alt="KL Logo" class="logo-img">
                 </a>
             </div>
-            <a href="{% url 'index' %}" class="brand-logo text-decoration-none">
-                THE DIGITAL MEMORY
+            <a href="{% url 'index' %}" class="brand-logo text-decoration-none animate__animated animate__fadeInDown">
+                MAJALATI <span class="brand-text-ar">مجلتي</span>
             </a>
             <div class="nav-action-side">
                 <!-- المساحة فارغة بناءً على طلب المستخدم -->
@@ -321,8 +328,8 @@
     </main>
 
     <footer class="luxe-footer">
-        <div class="container text-center">
-            <h2 class="brand-logo" style="font-size: 1.5rem;">MEMORIES ETERNAL</h2>
+        <div class="container text-center animate__animated animate__fadeInUp">
+            <h2 class="brand-logo" style="font-size: 2rem;">MAJALATI <span class="brand-text-ar">مجلتي</span></h2>
             <div class="luxe-divider"></div>
             <p class="text-dim small mb-2">نظام المجلات الرقمية الأكثر فخامة في العالم العربي</p>
 

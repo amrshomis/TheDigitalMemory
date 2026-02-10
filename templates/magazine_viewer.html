@@ -97,19 +97,19 @@
 {% endblock %}
 
 {% block content %}
-<div class="row mb-5 py-4 align-items-center animate__animated animate__fadeIn">
-    <div class="col-md-7">
-        <h6 class="text-gold mb-2" style="letter-spacing: 5px; font-weight: bold; text-transform: uppercase;">The Royal
-            Reader</h6>
-        <h1 class="brand-logo mb-0" style="font-size: 3.5rem;">{{ magazine.title }}</h1>
+<div class="col-md-7">
+    <h6 class="text-gold mb-2" style="letter-spacing: 5px; font-weight: bold; text-transform: uppercase;">MAJALATI
+        Reader</h6>
+    <h1 class="brand-logo mb-0 animate__animated animate__fadeInLeft"
+        style="font-family: 'Amiri', serif; font-size: 4rem;">{{ magazine.title }}</h1>
+</div>
+<div class="col-md-5 text-md-start">
+    <div class="d-flex gap-3 justify-content-md-end">
+        <a href="{% url 'index' %}" class="btn-luxe text-decoration-none">
+            <i class="fa-solid fa-arrow-right-long me-2"></i> للعودة إلى المعرض
+        </a>
     </div>
-    <div class="col-md-5 text-md-start">
-        <div class="d-flex gap-3 justify-content-md-end">
-            <a href="{% url 'index' %}" class="btn-luxe text-decoration-none">
-                <i class="fa-solid fa-arrow-right-long me-2"></i> للعودة إلى المعرض
-            </a>
-        </div>
-    </div>
+</div>
 </div>
 
 <div class="book-container shadow-2xl animate__animated animate__zoomIn">
@@ -138,9 +138,14 @@
 
 <div class="row mt-5 animate__animated animate__fadeInUp">
     <div class="col-lg-4 text-center">
-        <div class="p-4" style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 8px;">
-            <h5 class="luxury-title mb-3">مسح والمشاركة</h5>
-            <div id="qrcode" class="qr-premium-box p-3 bg-white d-inline-block rounded"></div>
+        <div class="p-4 animate__animated animate__fadeInRight animate__delay-1s"
+            style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 8px;">
+            <h5 class="luxury-title mb-3" style="font-family: 'Amiri', serif;">مسح والمشاركة</h5>
+            <div id="qrcode" class="qr-premium-box p-3 bg-white d-inline-block rounded mb-3"></div>
+            <br>
+            <button onclick="downloadQR()" class="btn-luxe btn-sm w-100">
+                <i class="fa-solid fa-download me-2"></i> حفظ الرمز
+            </button>
             <p class="text-dim small mt-3">امسح الرمز لفتح المجلة في هاتفك فوراً</p>
         </div>
     </div>
@@ -205,8 +210,8 @@
             enableSound: false,
             // Ultra-Performance Tuning
             more: {
-                preload: 20,
-                range: 20,
+                preload: 5,
+                range: 5,
                 textSelectable: false,
                 webgl: true,
                 cursor: "pointer",
@@ -247,5 +252,28 @@
             document.getElementById('fallback-container').style.display = 'block';
         }
     }, 4000);
+
+    function downloadQR() {
+        const qrCanvas = document.querySelector('#qrcode canvas');
+        const qrImage = document.querySelector('#qrcode img');
+        let url = '';
+
+        if (qrCanvas) {
+            url = qrCanvas.toDataURL("image/png");
+        } else if (qrImage) {
+            url = qrImage.src;
+        }
+
+        if (url) {
+            const a = document.createElement('a');
+            a.download = 'majalati-qr-{{ magazine.slug }}.png';
+            a.href = url;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        } else {
+            alert('انتظر قليلاً حتى يتم إنشاء الرمز..');
+        }
+    }
 </script>
 {% endblock %}

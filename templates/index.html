@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}The Digital Memory | نظام المجلات الرقمية الفاخر{% endblock %}
+{% block title %}MAJALATI مجلتي | نظام المجلات الرقمية الفاخر{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
@@ -60,11 +60,11 @@
 
 <!-- How it Works Section -->
 <div class="row py-5 mb-5" id="how-it-works">
-    <div class="col-12 text-center mb-5">
+    <div class="col-12 text-center mb-5 animate__animated animate__fadeIn">
         <h2 class="brand-logo" style="font-size: 2.5rem;">كيف يعمل بروتوكول الذكريات؟</h2>
         <div class="luxe-divider mx-auto"></div>
     </div>
-    <div class="col-md-4 text-center mb-4">
+    <div class="col-md-4 text-center mb-4 animate__animated animate__fadeInUp animate__delay-1s">
         <div class="step-card p-4">
             <div class="step-number mb-3">01</div>
             <i class="fa-solid fa-file-pdf fa-3x text-gold mb-3"></i>
@@ -72,7 +72,7 @@
             <p class="text-dim small">قم بتجهيز صور ومحتويات مناسبتك في ملف PDF واحد.</p>
         </div>
     </div>
-    <div class="col-md-4 text-center mb-4">
+    <div class="col-md-4 text-center mb-4 animate__animated animate__fadeInUp animate__delay-2s">
         <div class="step-card p-4">
             <div class="step-number mb-3">02</div>
             <i class="fa-solid fa-gears fa-3x text-gold mb-3"></i>
@@ -80,7 +80,7 @@
             <p class="text-dim small">نقوم بتحويل ملفك إلى تجربة تفاعلية ثلاثية الأبعاد بلمسات احترافية.</p>
         </div>
     </div>
-    <div class="col-md-4 text-center mb-4">
+    <div class="col-md-4 text-center mb-4 animate__animated animate__fadeInUp animate__delay-3s">
         <div class="step-card p-4">
             <div class="step-number mb-3">03</div>
             <i class="fa-solid fa-share-nodes fa-3x text-gold mb-3"></i>
@@ -98,11 +98,9 @@
             <p class="text-dim mb-4 mx-auto" style="max-width: 700px;">تواصل معنا الآن عبر الرقم الموضح في الشريط
                 المتحرك أعلاه لترتيب رفع مجلتك الخاصة.</p>
             <a href="https://wa.me/967715299909" target="_blank"
-                class="contact-info-block d-inline-block p-3 text-decoration-none"
-                style="border: 2px solid var(--gold); border-radius: 8px; transition: 0.4s; background: rgba(212, 175, 55, 0.05);">
-                <p class="mb-0 text-gold" style="font-size: 1.5rem; letter-spacing: 2px; font-weight: 800;">
-                    <i class="fa-brands fa-whatsapp me-2"></i> 715299909
-                </p>
+                class="btn-whatsapp animate__animated animate__pulse animate__infinite">
+                <i class="fa-brands fa-whatsapp me-3"></i>
+                <span style="font-family: 'Cairo', sans-serif;">تواصل عبر واتساب | 715299909</span>
             </a>
         </div>
     </div>
@@ -157,10 +155,10 @@
     }
 
     .hero-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 4rem;
+        font-family: 'Amiri', serif;
+        font-size: 4.5rem;
         font-weight: 700;
-        line-height: 1.2;
+        line-height: 1.3;
     }
 
     .hero-subtitle {
@@ -260,24 +258,26 @@
         background: #25D366;
         color: #fff !important;
         padding: 15px 40px;
-        border-radius: 30px;
+        border-radius: 50px;
         font-weight: 700;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
         transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         border: none;
-        box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+        box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+        font-size: 1.2rem;
     }
 
     .btn-whatsapp:hover {
         transform: translateY(-5px) scale(1.05);
-        box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+        box-shadow: 0 15px 30px rgba(37, 211, 102, 0.5);
         background: #20ba5a;
+        color: #fff !important;
     }
 
     .btn-whatsapp i {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
 
     /* Original Styles */
