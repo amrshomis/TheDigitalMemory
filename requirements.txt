@@ -3,3 +3,4 @@ whitenoise
 qrcode
 pillow
 django-cleanup
+pypdf

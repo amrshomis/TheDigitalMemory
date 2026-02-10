@@ -112,7 +112,14 @@
 </div>
 </div>
 
-<div class="book-container shadow-2xl animate__animated animate__zoomIn">
+<div class="book-container shadow-2xl animate__animated animate__fadeIn">
+    <!-- Custom Loader -->
+    <div id="pdf-loader"
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--gold);">
+        <i class="fa-solid fa-circle-notch fa-spin fa-3x mb-3"></i>
+        <h4 style="font-family: 'Amiri', serif;">جاري تجهيز المجلة...</h4>
+        <p class="text-dim small">يرجى الانتظار قليلاً لتجربة أفضل</p>
+    </div>
     <!-- Premium Toolbar for Fullscreen -->
     <div class="viewer-toolbar-premium">
         <div class="d-flex align-items-center">
@@ -210,8 +217,8 @@
             enableSound: false,
             // Ultra-Performance Tuning
             more: {
-                preload: 5,
-                range: 5,
+                preload: 2,
+                range: 2,
                 textSelectable: false,
                 webgl: true,
                 cursor: "pointer",
@@ -224,6 +231,10 @@
         // Initialize FlipBook with ultra-speed optimizations
         if ($.fn.flipBook) {
             flipBook = $("#df-viewer-container").flipBook(source, settings);
+            // Hide loader when book is ready (approximate)
+            setTimeout(function () {
+                $("#pdf-loader").fadeOut();
+            }, 2000);
         } else {
             console.error("DFlip plugin not found!");
             document.getElementById('df-viewer-container').innerHTML = '<div class="text-center p-5 text-gold">خطأ في تحميل مكتبة العرض. يرجى المحاولة لاحقاً.</div>';
