@@ -1,0 +1,22 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+.env
+
+# Environments
+.venv/
+.test/
+env/
+venv/
+test/
+ENV/
+
+# OS
+.DS_Store
+Thumbs.db

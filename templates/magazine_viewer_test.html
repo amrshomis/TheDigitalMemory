@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}{{ magazine.title }} | المعرض الفاخر{% endblock %}
+{% block meta_description %}تصفح المجلة الرقمية الفاخرة{% endblock %}
+{% block og_title %}{{ magazine.title }}{% endblock %}
+{% block og_description %}{{ magazine.description }}{% endblock %}
+{% block og_image %}{{ magazine.cover_image.url }}{% endblock %}
+{% block content %}
+<h1>TEST</h1>
+{% endblock %}

@@ -1,0 +1,251 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}{{ magazine.title }} | المعرض الفاخر{% endblock %}
+
+{% block meta_description %}{{ magazine.description|default:"تصفح المجلة الرقمية"|truncatewords:20 }}{% endblock %}
+{% block og_title %}{{ magazine.title }}{% endblock %}
+{% block og_description %}{{ magazine.description|default:"تصفح المجلة الرقمية"|truncatewords:25 }}{% endblock %}
+{% block og_image %}{{ magazine.cover_image.url }}{% endblock %}
+
+{% block extra_css %}
+<!-- DFlip (3D FlipBook) CDN for premium experience -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dflip@1.0.0/css/dflip.min.css">
+<style>
+    .book-container {
+        height: 90vh;
+        /* Increased height */
+        margin-top: 20px;
+        background: radial-gradient(circle, #222 0%, #000 100%);
+        border: 1px solid var(--glass-border);
+        border-radius: 4px;
+        position: relative;
+        /* Removed overflow: hidden to prevent edge clipping */
+        box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
+    }
+
+    .viewer-toolbar-premium {
+        background: rgba(0, 0, 0, 0.95);
+        padding: 12px 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--glass-border);
+        height: 60px;
+    }
+
+    .btn-luxe-outline {
+        border: 1px solid var(--gold);
+        color: var(--gold) !important;
+        background: transparent;
+        padding: 8px 25px;
+        border-radius: 2px;
+        font-weight: 700;
+        transition: 0.4s;
+        text-decoration: none;
+        font-size: 0.85rem;
+    }
+
+    .btn-luxe-outline:hover {
+        background: rgba(212, 175, 55, 0.1);
+        transform: translateY(-2px);
+    }
+
+    /* Fallback styles in case library fails to load */
+    .fallback-msg {
+        display: none;
+        color: var(--gold);
+        text-align: center;
+        padding: 100px 20px;
+    }
+
+    /* Flipbook controls styling */
+    .df-ui {
+        background: rgba(20, 20, 20, 0.9) !important;
+    }
+
+    .df-ui .df-ui-btn {
+        color: var(--gold) !important;
+    }
+
+    /* Mobile Specific Optimizations */
+    @media (max-width: 768px) {
+        .book-container {
+            height: 70vh;
+            /* Reduced for mobile */
+            margin-top: 10px;
+        }
+
+        .viewer-toolbar-premium {
+            padding: 8px 15px;
+            height: 50px;
+        }
+
+        .brand-logo {
+            font-size: 2.2rem !important;
+        }
+
+        .btn-luxe-outline {
+            padding: 6px 15px;
+            font-size: 0.75rem;
+        }
+
+        #df-viewer-container {
+            height: calc(100% - 50px) !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-5 py-4 align-items-center animate__animated animate__fadeIn">
+    <div class="col-md-7">
+        <h6 class="text-gold mb-2" style="letter-spacing: 5px; font-weight: bold; text-transform: uppercase;">The Royal
+            Reader</h6>
+        <h1 class="brand-logo mb-0" style="font-size: 3.5rem;">{{ magazine.title }}</h1>
+    </div>
+    <div class="col-md-5 text-md-start">
+        <div class="d-flex gap-3 justify-content-md-end">
+            <a href="{% url 'index' %}" class="btn-luxe text-decoration-none">
+                <i class="fa-solid fa-arrow-right-long me-2"></i> للعودة إلى المعرض
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="book-container shadow-2xl animate__animated animate__zoomIn">
+    <!-- Premium Toolbar for Fullscreen -->
+    <div class="viewer-toolbar-premium">
+        <div class="d-flex align-items-center">
+            <i class="fa-solid fa-book-open text-gold me-2"></i>
+            <span class="small text-dim">نمط العرض الفاخر</span>
+        </div>
+        <button id="btn-fullscreen" class="btn-luxe-outline btn-sm py-1 px-4">
+            <i class="fa-solid fa-expand me-2"></i> ملء الشاشة
+        </button>
+    </div>
+
+    <!-- Viewer Container -->
+    <div id="df-viewer-container" style="width:100%; height:calc(100% - 60px);">
+    </div>
+
+    <div id="fallback-container" class="fallback-msg">
+        <i class="fa-solid fa-cloud-bolt fa-3x mb-4"></i>
+        <h3>نعتذر، يتطلب تأثير تقليب الصفحات اتصالاً بالإنترنت</h3>
+        <p>جاري عرض الملف بالطريقة التقليدية...</p>
+        <iframe src="{{ magazine.pdf_file.url }}#toolbar=0" width="100%" height="500px"></iframe>
+    </div>
+</div>
+
+<div class="row mt-5 animate__animated animate__fadeInUp">
+    <div class="col-lg-4 text-center">
+        <div class="p-4" style="background: var(--glass); border: 1px solid var(--glass-border); border-radius: 8px;">
+            <h5 class="luxury-title mb-3">مسح والمشاركة</h5>
+            <div id="qrcode" class="qr-premium-box p-3 bg-white d-inline-block rounded"></div>
+            <p class="text-dim small mt-3">امسح الرمز لفتح المجلة في هاتفك فوراً</p>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="h-100 p-4" style="background: rgba(212, 175, 55, 0.03); border-right: 4px solid var(--gold);">
+            <h4 class="luxury-title mb-4">تعليمات التصفح</h4>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <p class="text-white small mb-1"><i class="fa-solid fa-mouse text-gold me-2"></i>
+                        <strong>الكمبيوتر:</strong> اسحب حواف الصفحة أو استخدم الأسهم.
+                    </p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p class="text-white small mb-1"><i class="fa-solid fa-hand-pointer text-gold me-2"></i>
+                        <strong>الجوال:</strong> المس واسحب لتقليب الصفحات.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-white small mb-1"><i class="fa-solid fa-magnifying-glass-plus text-gold me-2"></i>
+                        <strong>التكبير:</strong> استخدم بكرة الماوس أو النقر المزدوج.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="text-white small mb-1"><i class="fa-solid fa-expand text-gold me-2"></i> <strong>ملء
+                            الشاشة:</strong> اضغط على الرمز في شريط الأدوات.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- jQuery (required for DFlip) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DFlip Script -->
+<script src="https://cdn.jsdelivr.net/npm/dflip@1.0.0/js/dflip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+    // Initialize QR Code
+    new QRCode(document.getElementById("qrcode"), {
+        text: window.location.href,
+        width: 150,
+        height: 150
+    });
+
+    // DFlip Professional Initialization with Speed Optimizations
+    var flipBook;
+    $(document).ready(function () {
+        var source = "{{ magazine.pdf_file.url }}";
+        var settings = {
+            source: source,
+            renderType: "webgl",
+            height: "100%", // Explicitly set height
+            duration: 400,
+            overwritePDFExport: true,
+            pageTextureSize: 1024,
+            direction: DFLIP.DIRECTION.RTL,
+            autoEnableOutline: false,
+            autoEnableThumbnail: false,
+            enableSound: false,
+            // Ultra-Performance Tuning
+            more: {
+                preload: 20,
+                range: 20,
+                textSelectable: false,
+                webgl: true,
+                cursor: "pointer",
+                progressive: true,
+                paddingTop: 20, // Add internal padding for better fit
+                paddingBottom: 20
+            }
+        };
+
+        // Initialize FlipBook with ultra-speed optimizations
+        if ($.fn.flipBook) {
+            flipBook = $("#df-viewer-container").flipBook(source, settings);
+        } else {
+            console.error("DFlip plugin not found!");
+            document.getElementById('df-viewer-container').innerHTML = '<div class="text-center p-5 text-gold">خطأ في تحميل مكتبة العرض. يرجى المحاولة لاحقاً.</div>';
+        }
+
+        // Fullscreen Toggle logic
+        $("#btn-fullscreen").on("click", function () {
+            if (flipBook && flipBook.ui && typeof flipBook.ui.toggleFullscreen === 'function') {
+                flipBook.ui.toggleFullscreen();
+            } else if (flipBook && typeof flipBook.toggleFullscreen === 'function') {
+                flipBook.toggleFullscreen();
+            } else {
+                // Fallback for native fullscreen if library method fails
+                var elem = document.getElementById("df-viewer-container");
+                if (elem.requestFullscreen) elem.requestFullscreen();
+                else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+                else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+            }
+        });
+    });
+
+    // Check if DFlip loaded, if not show fallback
+    setTimeout(function () {
+        if (typeof DFLIP === 'undefined') {
+            document.getElementById('df-viewer-container').style.display = 'none';
+            document.getElementById('fallback-container').style.display = 'block';
+        }
+    }, 4000);
+</script>
+{% endblock %}

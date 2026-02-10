@@ -1,0 +1,5 @@
+django
+whitenoise
+qrcode
+pillow
+django-cleanup
