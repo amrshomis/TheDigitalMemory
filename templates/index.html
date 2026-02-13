@@ -93,18 +93,85 @@
 <!-- Design Request Section (Updated) -->
 <div class="row mt-5 mb-5 animate__animated animate__fadeInUp">
     <div class="col-12">
-        <div class="cta-banner p-5 text-center">
-            <h2 class="hero-title mb-3" style="font-size: 2.5rem;">جاهز للبدء؟</h2>
-            <p class="text-dim mb-4 mx-auto" style="max-width: 700px;">تواصل معنا الآن عبر الرقم الموضح في الشريط
-                المتحرك أعلاه لترتيب رفع مجلتك الخاصة.</p>
-            <a href="https://wa.me/967715299909" target="_blank"
-                class="btn-whatsapp animate__animated animate__pulse animate__infinite">
-                <i class="fa-brands fa-whatsapp me-3"></i>
-                <span style="font-family: 'Cairo', sans-serif;">تواصل عبر واتساب </span>
-            </a>
+        <div class="cta-banner p-3 p-md-5 text-center">
+            <h2 class="hero-title mb-3" style="font-size: 2.5rem; font-family: 'Amiri', serif;">جاهز للبدء؟</h2>
+            <p class="text-dim mb-5 mx-auto" style="max-width: 700px;">اختر الخدمة التي تناسب احتياجك وسنقوم بالرد عليك
+                على الفور</p>
+
+            <div class="row g-4 justify-content-center">
+                <!-- Choice 1: Upload Only -->
+                <div class="col-md-5">
+                    <div class="service-choice-card p-4 h-100">
+                        <div class="service-icon mb-3">
+                            <i class="fa-solid fa-cloud-arrow-up fa-2x text-gold"></i>
+                        </div>
+                        <h4 class="luxury-title mb-3">رفع مجلة جاهزة</h4>
+                        <p class="text-dim small mb-4">لديك ملف PDF جاهز؟ سنقوم بتحويله إلى نسخة رقمية فاخرة وربطه برمز
+                            QR فوراً.</p>
+                        <a href="https://wa.me/967715299909?text=أريد%20رفع%20مجلة%20PDF%20جاهزة" target="_blank"
+                            class="btn-luxe btn-sm py-2 w-100">
+                            اطلب الرفع الآن
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Choice 2: Design & Upload -->
+                <div class="col-md-5">
+                    <div class="service-choice-card p-4 h-100 highlight">
+                        <div class="service-icon mb-3">
+                            <i class="fa-solid fa-pen-nib fa-2x text-gold"></i>
+                        </div>
+                        <h4 class="luxury-title mb-3">تصميم ورفع مجلة</h4>
+                        <p class="text-dim small mb-4">لا تملك تصميماً؟ دع فريقنا المحترف يصمم لك مجلة إبداعية من الصفر
+                            ثم يرفعها لك.</p>
+                        <a href="https://wa.me/967715299909?text=أريد%20تصميم%20مجلة%20جديدة%20ورفعها" target="_blank"
+                            class="btn-luxe btn-sm py-2 w-100">
+                            اطلب التصميم والرفع
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+    .service-choice-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        transition: 0.4s;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .service-choice-card:hover {
+        background: rgba(212, 175, 55, 0.05);
+        border-color: var(--gold);
+        transform: translateY(-5px);
+    }
+
+    .service-choice-card.highlight {
+        border-color: rgba(212, 175, 55, 0.4);
+        background: rgba(212, 175, 55, 0.02);
+        position: relative;
+    }
+
+    .service-choice-card.highlight::after {
+        content: 'الأكثر طلباً';
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--gold-gradient);
+        color: #000;
+        font-size: 0.7rem;
+        padding: 2px 12px;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+</style>
 
 <div class="row mb-5 py-5 text-center section-divider">
     <div class="col-12">

@@ -126,9 +126,15 @@
             <i class="fa-solid fa-book-open text-gold me-2"></i>
             <span class="small text-dim">نمط العرض الفاخر</span>
         </div>
-        <button id="btn-fullscreen" class="btn-luxe-outline btn-sm py-1 px-4">
-            <i class="fa-solid fa-expand me-2"></i> ملء الشاشة
-        </button>
+        <div class="d-flex gap-2">
+            <a href="{{ magazine.pdf_file.url }}" download
+                class="btn-luxe-outline btn-sm py-1 px-4 text-decoration-none" title="تحميل PDF">
+                <i class="fa-solid fa-download me-2"></i> تحميل
+            </a>
+            <button id="btn-fullscreen" class="btn-luxe-outline btn-sm py-1 px-4">
+                <i class="fa-solid fa-expand me-2"></i> ملء الشاشة
+            </button>
+        </div>
     </div>
 
     <!-- Viewer Container -->
